@@ -1,41 +1,30 @@
-import React from "react";
-import axios from 'axios';
-import "./index.css";
-
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      bestShows: []
-    };
-  }
-
-  componentDidMount() {
-    console.log("componentDidMount success")
-    axios.get('/api/data')
-      .then(res => {
-        console.log("data recieved: ", res.data);
-        this.setState({ bestShows: res.data[0] });
-      })
-      .catch(alert);
-  }
+import LoginForm from "./components/LoginForm/LoginForm";
+import RegistrationForm from "./components/RegisterForm/RegistrationForm";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./components/Home/HomePage";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import BookingTicket from "./components/BookingTicket/BookingTicket";
 
 
-  render() {
-    console.log("render bestShows: ", this.state.bestShows)
-    return (
+function App() {
+  return (
+    <Router>
       <div>
-        azure-mern-demo
-        <ul>
-          {
-            Object.keys(this.state.bestShows).map((cur, idx) => (
-              <li>{cur} - {this.state.bestShows[cur]} </li>
-            ))
-          }
-        </ul>
+      <ToastContainer />
+        <Routes>
+          <Route exact path="/register" element={<RegistrationForm />} />
+          <Route exact path="/login" element={<LoginForm />} />
+          <Route exact path="/forgotPassword" element={<ForgotPassword />} />
+          <Route exact path="/resetPassword" element={<ResetPassword />} />
+          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/booking" element={<BookingTicket />} />
+        </Routes>
       </div>
-    );
-  }
+    </Router>
+  );
 }
 
 export default App;
